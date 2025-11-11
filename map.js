@@ -16,3 +16,8 @@ const map = new mapboxgl.Map({
   minZoom: 5, // Minimum allowed zoom
   maxZoom: 18, // Maximum allowed zoom
 });
+
+// Log map load event
+map.on('load', () => {
+  console.log('Map has been loaded successfully');
+});
