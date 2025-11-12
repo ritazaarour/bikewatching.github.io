@@ -18,7 +18,7 @@ const map = new mapboxgl.Map({
 });
 
 // Log map load event
-map.on('load', async () => {
+map.on('style.load', async () => {
   console.log('Map has been loaded successfully');
 });
 
