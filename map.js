@@ -3,8 +3,6 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 // Import Mapbox as an ESM module
 import mapboxgl from 'https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/+esm';
 
-// Check that Mapbox GL JS is loaded
-console.log('Mapbox GL JS Loaded:', mapboxgl);
 
 // access token 
 mapboxgl.accessToken = 'pk.eyJ1Ijoicml0YXphYXJvdXIiLCJhIjoiY21odTQ2enBnMHFkcTJxcHZrbThoZGRkcCJ9.xqsjHK2wczZ7Cwpy4fvO7w';
@@ -26,7 +24,7 @@ map.on('load', async () => {
 
 map.addSource('boston-route', {
   type: 'geojson',
-  data: 'data/boston_bike_route.geojson',
+  data: 'https://bostonopendata-boston.opendata.arcgis.com/datasets/boston::existing-bike-network-2022.geojson',
 });
 
 map.addLayer({
@@ -42,7 +40,7 @@ map.addLayer({
 
 map.addSource('cambridge-route', {
   type: 'geojson',
-  data: 'data/cambridge_bike_route.geojson',
+  data: 'https://opendata.cambridgema.gov/api/geospatial/0381a9b6-86b4-4939-a9d5-c39092a1a41b?method=export&format=GeoJSON',
 });
 
 map.addLayer({
