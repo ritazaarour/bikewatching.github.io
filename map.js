@@ -19,12 +19,12 @@ const map = new mapboxgl.Map({
 
 // Log map load event
 map.on('load', () => {
-  console.log('✅ Map loaded, adding layers now...');
+  console.log('Map loaded, adding layers now...');
 
   // Boston bike lanes
   map.addSource('boston-route', {
     type: 'geojson',
-    data: 'https://ritazaarour.github.io/bikewatching/data/boston_bike_lanes.geojson'
+    data: 'https://ritazaarour.github.io/bikewatching/data/boston_bike_route.geojson',
   });
 
   map.addLayer({
@@ -41,7 +41,7 @@ map.on('load', () => {
   // Cambridge bike lanes
   map.addSource('cambridge-route', {
     type: 'geojson',
-    data: 'https://ritazaarour.github.io/bikewatching/data/cambridge_bike_lanes.geojson'
+    data: 'https://ritazaarour.github.io/bikewatching/data/cambridge_bike_route.geojson',
   });
 
   map.addLayer({
