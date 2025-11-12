@@ -24,7 +24,7 @@ map.on('load', () => {
   // Boston bike lanes
   map.addSource('boston-route', {
     type: 'geojson',
-    data: 'data/boston_bike_lanes.geojson'
+    data: 'https://ritazaarour.github.io/bikewatching/data/boston_bike_lanes.geojson'
   });
 
   map.addLayer({
@@ -41,7 +41,7 @@ map.on('load', () => {
   // Cambridge bike lanes
   map.addSource('cambridge-route', {
     type: 'geojson',
-    data: 'data/cambridge_bike_lanes.geojson'
+    data: 'https://ritazaarour.github.io/bikewatching/data/cambridge_bike_lanes.geojson'
   });
 
   map.addLayer({
