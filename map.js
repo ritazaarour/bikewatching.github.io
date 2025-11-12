@@ -1,7 +1,6 @@
-import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
-
 // Import Mapbox as an ESM module
 import mapboxgl from 'https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/+esm';
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
 
 // access token 
@@ -18,7 +17,7 @@ const map = new mapboxgl.Map({
 });
 
 // Log map load event
-map.on('load', () => {
+map.on('load', async () => {
   console.log('Map loaded, adding layers now...');
 
   // Boston bike lanes
@@ -49,9 +48,23 @@ map.on('load', () => {
     type: 'line',
     source: 'cambridge-route',
     paint: {
-      'line-color': '#006400',
+      'line-color': '#5fae52',
       'line-width': 3,
       'line-opacity': 0.6
     }
   });
+
+  let jsonData;
+  try {
+    const jsonurl = 'https://dsc106.com/labs/lab07/data/bluebikes-stations.json';
+
+    const jsonData = await d3.json(jsonurl);
+    console.log('Loaded JSON Data:', jsonData);
+
+    let stations = jsonData.data.stations;
+    console.log('Stations Array:', stations);
+
+  } catch (error) {
+    console.error('Error loading JSON:', error);
+  }
 });
