@@ -24,7 +24,7 @@ map.on('load', () => {
   // Boston bike lanes
   map.addSource('boston-route', {
     type: 'geojson',
-    data: 'https://bostonopendata-boston.opendata.arcgis.com/datasets/boston::existing-bike-network-2022.geojson'
+    data: 'data/boston_bike_lanes.geojson'
   });
 
   map.addLayer({
@@ -41,7 +41,7 @@ map.on('load', () => {
   // Cambridge bike lanes
   map.addSource('cambridge-route', {
     type: 'geojson',
-    data: 'https://opendata.cambridgema.gov/api/geospatial/0381a9b6-86b4-4939-a9d5-c39092a1a41b?method=export&format=GeoJSON'
+    data: 'data/cambridge_bike_lanes.geojson'
   });
 
   map.addLayer({
