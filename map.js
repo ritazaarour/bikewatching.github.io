@@ -29,11 +29,6 @@ map.addSource('boston-route', {
   data: 'data/boston_bike_route.geojson',
 });
 
-map.addSource('cambridge-route', {
-  type: 'geojson',
-  data: 'data/cambridge_bike_route.geojson',
-});
-
 map.addLayer({
     id: 'bike-lanes',
     type: 'line',
@@ -43,6 +38,11 @@ map.addLayer({
         'line-width': 3,
         'line-opacity': 0.4,
     },
+});
+
+map.addSource('cambridge-route', {
+  type: 'geojson',
+  data: 'data/cambridge_bike_route.geojson',
 });
 
 map.addLayer({
