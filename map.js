@@ -1,3 +1,5 @@
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
+
 // Import Mapbox as an ESM module
 import mapboxgl from 'https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/+esm';
 
@@ -15,6 +17,11 @@ const map = new mapboxgl.Map({
   zoom: 12, // Initial zoom level
   minZoom: 5, // Minimum allowed zoom
   maxZoom: 18, // Maximum allowed zoom
+});
+
+// Log map load event
+map.on('load', async () => {
+  console.log('Map has been loaded successfully');
 });
 
 map.addSource('boston-route', {
@@ -47,9 +54,4 @@ map.addLayer({
         'line-width': 3,
         'line-opacity': 0.4,
     },
-});
-
-// Log map load event
-map.on('load', async () => {
-  console.log('Map has been loaded successfully');
 });
