@@ -18,38 +18,40 @@ const map = new mapboxgl.Map({
 });
 
 // Log map load event
-map.on('style.load', async () => {
-  console.log('Map has been loaded successfully');
-});
+map.on('load', () => {
+  console.log('✅ Map loaded, adding layers now...');
 
-map.addSource('boston-route', {
-  type: 'geojson',
-  data: 'https://bostonopendata-boston.opendata.arcgis.com/datasets/boston::existing-bike-network-2022.geojson',
-});
+  // Boston bike lanes
+  map.addSource('boston-route', {
+    type: 'geojson',
+    data: 'https://bostonopendata-boston.opendata.arcgis.com/datasets/boston::existing-bike-network-2022.geojson'
+  });
 
-map.addLayer({
+  map.addLayer({
     id: 'bike-lanes',
     type: 'line',
     source: 'boston-route',
     paint: {
-        'line-color': '#5fae52',
-        'line-width': 3,
-        'line-opacity': 0.4,
-    },
-});
+      'line-color': '#5fae52',
+      'line-width': 3,
+      'line-opacity': 0.6
+    }
+  });
 
-map.addSource('cambridge-route', {
-  type: 'geojson',
-  data: 'https://opendata.cambridgema.gov/api/geospatial/0381a9b6-86b4-4939-a9d5-c39092a1a41b?method=export&format=GeoJSON',
-});
+  // Cambridge bike lanes
+  map.addSource('cambridge-route', {
+    type: 'geojson',
+    data: 'https://opendata.cambridgema.gov/api/geospatial/0381a9b6-86b4-4939-a9d5-c39092a1a41b?method=export&format=GeoJSON'
+  });
 
-map.addLayer({
+  map.addLayer({
     id: 'cambridge-bike-lanes',
     type: 'line',
     source: 'cambridge-route',
     paint: {
-        'line-color': '#5fae52',
-        'line-width': 3,
-        'line-opacity': 0.4,
-    },
+      'line-color': '#006400',
+      'line-width': 3,
+      'line-opacity': 0.6
+    }
+  });
 });
