@@ -17,7 +17,39 @@ const map = new mapboxgl.Map({
   maxZoom: 18, // Maximum allowed zoom
 });
 
+map.addSource('boston-route', {
+  type: 'geojson',
+  data: 'data/boston_bike_route.geojson',
+});
+
+map.addSource('cambridge-route', {
+  type: 'geojson',
+  data: 'data/cambridge_bike_route.geojson',
+});
+
+map.addLayer({
+    id: 'bike-lanes',
+    type: 'line',
+    source: 'boston-route',
+    paint: {
+        'line-color': '#5fae52',
+        'line-width': 3,
+        'line-opacity': 0.4,
+    },
+});
+
+map.addLayer({
+    id: 'cambridge-bike-lanes',
+    type: 'line',
+    source: 'cambridge-route',
+    paint: {
+        'line-color': '#5fae52',
+        'line-width': 3,
+        'line-opacity': 0.4,
+    },
+});
+
 // Log map load event
-map.on('load', () => {
+map.on('load', async () => {
   console.log('Map has been loaded successfully');
 });
