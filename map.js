@@ -108,7 +108,7 @@ map.on('load', async () => {
         const departures = d3.rollup(trips, v => v.length, d => d.start_station_id);
         const arrivals = d3.rollup(trips, v => v.length, d => d.end_station_id);
         
-        stations = stations.map((station) => {
+        stations.map((station) => {
             let id = station.short_name;
             station.arrivals = arrivals.get(id) ?? 0;
             station.departures = departures.get(id) ?? 0;
@@ -122,13 +122,11 @@ map.on('load', async () => {
             .domain([0, d3.max(stations, d => d.totalTraffic)])
             .range([5, 20]);
         
-        const circles = svg
-            .selectAll('circle')
-            .data(stations)
-            .enter()
-            .append('circle')
+        circles = svg
             .attr('r', d => radiusScale(d.totalTraffic))
-            .attr('fill', d => d3.interpolateReds(d.totalTraffic / d3.max(stations, s => s.totalTraffic)))
+            .attr('fill', 'steelblue')
+            .attr('fill-opacity', 0.6)
+            .attr('stroke', 'white')
             .each(function (d) {
                 // Add <title> for browser tooltips
                 d3.select(this)
@@ -136,6 +134,8 @@ map.on('load', async () => {
                     .text(
                         `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`,
                     );
+        
+        updatePositions();
             });
     } catch (error) {
         console.error('Error loading trips CSV:', error);
