@@ -70,6 +70,7 @@ map.on('load', async () => {
 
     stations = jsonData.data.stations;
     console.log('Stations Array:', stations);
+    console.log('Example station:', stations[0]);
 
   } catch (error) {
     console.error('Error loading JSON:', error);
