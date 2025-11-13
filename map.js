@@ -100,9 +100,9 @@ map.on('load', async () => {
     map.on('moveend', updatePositions);
 
     try {
-        const trips = 'https://dsc106.com/labs/lab07/data/bluebikes-traffic-2024-03.csv';
+        const tripsUrl = 'https://dsc106.com/labs/lab07/data/bluebikes-traffic-2024-03.csv';
 
-        trips = await d3.csv(trips);
+        const trips = await d3.csv(tripsUrl);
         console.log('Loaded Trips Data:', trips);
 
         const departures = d3.rollup(trips, v => v.length, d => d.start_station_id);
