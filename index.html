@@ -11,7 +11,18 @@
     <link rel="stylesheet" href="map.css">
 </head>
 <body>
-    <h1>🚴🏼‍♀️ Bikewatching</h1>
+    <header>
+        <h1>🚴🏼‍♀️ Bikewatching</h1>
+        <label style="margin-left: auto;">
+            Filter by time:
+            <input type="range" min="-1" max="1440" id="timeSlider" />
+            <div>
+                <time id="timeLabel" style="display: block;">All Day</time>
+                <em id="anyTimeLabel" style="display: block; color: grey; font-style: italic;">(any time)</em>
+            </div>
+        </label>
+    </header>
+
     <div id="map">
         <svg></svg>
     </div>
