@@ -5,18 +5,23 @@ header {
   margin-bottom: 0.5em;
 }
 
-header label {
-  margin-left: auto;
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.9em;
 }
 
 #timeSlider {
-  width: 200px;
+  width: 250px;
 }
 
 #selectedTime,
 #anyTime {
   display: block;
   margin-top: 0.25em;
+  font-size: 0.8em;
+  text-align: right;
 }
 
 #anyTime {
