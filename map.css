@@ -4,6 +4,18 @@ header {
   align-items: baseline;
 }
 
+.anyTimeLabel {
+    font-size: 0.75em;
+    align-items: end;
+    color: gray;
+    font-style: italic;
+}
+
+.timeLabel {
+  font-size: 0.875em;
+  align-items: end;
+}
+
 .map {
   margin: 0;
   padding: 5;
