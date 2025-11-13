@@ -5,7 +5,7 @@ header {
   margin-bottom: 0.5em;
 }
 
-label {
+header label {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
