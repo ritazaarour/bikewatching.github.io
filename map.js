@@ -121,6 +121,22 @@ map.on('load', async () => {
         const radiusScale = d3.scaleSqrt()
             .domain([0, d3.max(stations, d => d.totalTraffic)])
             .range([5, 20]);
+        
+        const circles = svg
+            .selectAll('circle')
+            .data(stations)
+            .enter()
+            .append('circle')
+            .attr('r', d => radiusScale(d.totalTraffic))
+            .attr('fill', d => d3.interpolateReds(d.totalTraffic / d3.max(stations, s => s.totalTraffic)))
+            .each(function (d) {
+                // Add <title> for browser tooltips
+                d3.select(this)
+                    .append('title')
+                    .text(
+                        `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`,
+                    );
+            });
     } catch (error) {
         console.error('Error loading trips CSV:', error);
     }
