@@ -117,9 +117,11 @@ map.on('load', async () => {
         });
 
         console.log('Stations with Traffic Data:', stations);
-
+        
+        const validStations = stations.filter(d => d.totalTraffic !== undefined && !isNaN(d.totalTraffic));
+        
         const radiusScale = d3.scaleSqrt()
-            .domain([0, d3.max(stations, d => d.totalTraffic)])
+            .domain([0, d3.max(validStations, d => d.totalTraffic)])
             .range([5, 20]);
         
         circles = svg
