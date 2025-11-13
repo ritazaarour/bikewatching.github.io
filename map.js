@@ -70,7 +70,6 @@ map.on('load', async () => {
 
     stations = jsonData.data.stations;
     console.log('Stations Array:', stations);
-    console.log('Example station:', stations[0]);
 
   } catch (error) {
     console.error('Error loading JSON:', error);
@@ -105,6 +104,7 @@ map.on('load', async () => {
 
         const trips = await d3.csv(tripsUrl);
         console.log('Loaded Trips Data:', trips);
+        console.log("Example trip:", trips[0]);
 
         const departures = d3.rollup(trips, v => v.length, d => d.start_station_id);
         const arrivals = d3.rollup(trips, v => v.length, d => d.end_station_id);
@@ -130,6 +130,7 @@ map.on('load', async () => {
             .attr('fill', 'steelblue')
             .attr('fill-opacity', 0.6)
             .attr('stroke', 'white')
+            .attr('pointer-events', 'auto')
             .each(function (d) {
                 // Add <title> for browser tooltips
                 d3.select(this)
