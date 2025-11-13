@@ -17,7 +17,7 @@ const map = new mapboxgl.Map({
 });
 
 function getCoords(station) {
-  const point = new mapboxgl.LngLat(+station.lon, +station.lat); // Convert lon/lat to Mapbox LngLat
+  const point = new mapboxgl.LngLat(+station.Lon, +station.Lat); // Convert lon/lat to Mapbox LngLat
   const { x, y } = map.project(point); // Project to pixel coordinates
   return { cx: x, cy: y }; // Return as object for use in SVG attributes
 }
@@ -109,7 +109,7 @@ map.on('load', async () => {
         const arrivals = d3.rollup(trips, v => v.length, d => d.end_station_id);
         
         stations.map((station) => {
-            let id = station.short_name;
+            let id = station.Number;
             station.arrivals = arrivals.get(id) ?? 0;
             station.departures = departures.get(id) ?? 0;
             station.totalTraffic = station.arrivals + station.departures;
@@ -124,7 +124,7 @@ map.on('load', async () => {
             .domain([0, d3.max(validStations, d => d.totalTraffic)])
             .range([5, 20]);
         
-        circles = svg
+        circles
             .attr('r', d => radiusScale(d.totalTraffic))
             .attr('fill', 'steelblue')
             .attr('fill-opacity', 0.6)
@@ -134,11 +134,12 @@ map.on('load', async () => {
                 d3.select(this)
                     .append('title')
                     .text(
-                        `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`,
+                        `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`
                     );
-        
-        updatePositions();
             });
+
+        updatePositions();
+
     } catch (error) {
         console.error('Error loading trips CSV:', error);
     }

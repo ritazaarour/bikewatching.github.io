@@ -25,9 +25,5 @@ body {
 }
 
 #map svg circle {
-  fill: steelblue;
-  stroke: white;
-  stroke-width: 1.5;
-  opacity: 0.8;
   pointer-events: auto;
 }
