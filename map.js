@@ -17,7 +17,7 @@ const map = new mapboxgl.Map({
 });
 
 function getCoords(station) {
-  const point = new mapboxgl.LngLat(+station.Lon, +station.Lat); // Convert lon/lat to Mapbox LngLat
+  const point = new mapboxgl.LngLat(+station.lon, +station.lat); // Convert lon/lat to Mapbox LngLat
   const { x, y } = map.project(point); // Project to pixel coordinates
   return { cx: x, cy: y }; // Return as object for use in SVG attributes
 }
