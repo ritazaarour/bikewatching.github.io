@@ -98,4 +98,30 @@ map.on('load', async () => {
     map.on('zoom', updatePositions);
     map.on('resize', updatePositions);
     map.on('moveend', updatePositions);
+
+    try {
+        const trips = 'https://dsc106.com/labs/lab07/data/bluebikes-traffic-2024-03.csv';
+
+        trips = await d3.csv(trips);
+        console.log('Loaded Trips Data:', trips);
+
+        const departures = d3.rollup(trips, v => v.length, d => d.start_station_id);
+        const arrivals = d3.rollup(trips, v => v.length, d => d.end_station_id);
+        
+        stations = stations.map((station) => {
+            let id = station.short_name;
+            station.arrivals = arrivals.get(id) ?? 0;
+            station.departures = departures.get(id) ?? 0;
+            station.totalTraffic = station.arrivals + station.departures;
+            return station;
+        });
+
+        console.log('Stations with Traffic Data:', stations);
+
+        const radiusScale = d3.scaleSqrt()
+            .domain([0, d3.max(stations, d => d.totalTraffic)])
+            .range([5, 20]);
+    } catch (error) {
+        console.error('Error loading trips CSV:', error);
+    }
 });
