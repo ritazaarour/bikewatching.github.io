@@ -25,5 +25,5 @@ body {
 }
 
 #map svg circle {
-  pointer-events: auto;
+  pointer-events: all !important;
 }
