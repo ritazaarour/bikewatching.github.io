@@ -110,7 +110,7 @@ map.on('load', async () => {
         const arrivals = d3.rollup(trips, v => v.length, d => d.end_station_id);
         
         stations.map((station) => {
-            let id = station.Number;
+            let id = station.short_name?.toUpperCase();;
             station.arrivals = arrivals.get(id) ?? 0;
             station.departures = departures.get(id) ?? 0;
             station.totalTraffic = station.arrivals + station.departures;
