@@ -2,18 +2,26 @@ header {
   display: flex;
   gap: 1em;
   align-items: baseline;
+  margin-bottom: 0.5em;
 }
 
-.anyTimeLabel {
-    font-size: 0.75em;
-    align-items: end;
-    color: gray;
-    font-style: italic;
+header label {
+  margin-left: auto;
 }
 
-.timeLabel {
-  font-size: 0.875em;
-  align-items: end;
+#timeSlider {
+  width: 200px;
+}
+
+#selectedTime,
+#anyTime {
+  display: block;
+  margin-top: 0.25em;
+}
+
+#anyTime {
+  color: gray;
+  font-style: italic;
 }
 
 .map {
