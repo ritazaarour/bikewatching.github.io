@@ -147,15 +147,14 @@ map.on('load', async () => {
         const anyTime = document.getElementById('anyTime');
 
         function formatTime(minutes) {
-            const date = new Date();
-            date.setHours(0, minutes, 0, 0);
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date = new Date(0, 0, 0, 0, minutes);
+            return date.toLocaleTimeString('en-US', { timeStyle: 'short' });
         }
 
         function updateTimeDisplay() {
             timeFilter = Number(timeSlider.value);
             if (timeFilter === -1) {
-                selectedTime.style.display = 'none';
+                selectedTime.textContent = '';
                 anyTime.style.display = 'block';
             } else {
                 selectedTime.style.display = 'block';
