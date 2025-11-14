@@ -141,6 +141,31 @@ map.on('load', async () => {
             });
 
         updatePositions();
+    
+        const timeSlider = document.getElementById('timeSlider');
+        const selectedTime = document.getElementById('selectedTime');
+        const anyTime = document.getElementById('anyTime');
+
+        function formatTime(minutes) {
+            const date = new Date();
+            date.setHours(0, minutes, 0, 0);
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function updateTimeDisplay() {
+            timeFilter = Number(timeSlider.value);
+            if (timeFilter === -1) {
+                selectedTime.style.display = 'none';
+                anyTime.style.display = 'block';
+            } else {
+                selectedTime.style.display = 'block';
+                anyTime.style.display = 'none';
+                selectedTime.textContent = formatTime(timeFilter);
+            }
+        }
+
+        timeSlider.addEventListener('input', updateTimeDisplay);
+        updateTimeDisplay();
 
     } catch (error) {
         console.error('Error loading trips CSV:', error);
