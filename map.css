@@ -12,24 +12,24 @@ header label {
   align-items: flex-end;
 }
 
-#timeSlider {
+#time-slider {
   width: 300px;
 }
 
-#selectedTime,
-#anyTime {
+#selected-time,
+#any-time {
   display: block;
   margin-top: 0.25em;
   font-size: 0.75em;
   text-align: right;
 }
 
-#anyTime {
+#any-time {
   color: gray;
   font-style: italic;
 }
 
-#selectedTime {
+#selected-time {
   font-weight: bold;
 }
 

@@ -22,6 +22,34 @@ function getCoords(station) {
   return { cx: x, cy: y }; // Return as object for use in SVG attributes
 }
 
+function formatTime(minutes) {
+    const date = new Date(0, 0, 0, 0, minutes);
+    return date.toLocaleTimeString('en-US', { timeStyle: 'short' });
+}
+
+function computeStationTraffic(stations, trips) {
+    const departures = d3.rollup(
+        trips,
+        (v) => v.length,
+        (d) => d.start_station_id,
+    );
+
+    const arrivals = d3.rollup(
+        trips,
+        (v) => v.length,
+        (d) => d.end_station_id,
+    );
+
+        // Update each station..
+    return stations.map((station) => {
+        let id = station.short_name.toUpperCase();
+        station.arrivals = arrivals.get(id) ?? 0;
+        station.departures = departures.get(id) ?? 0;
+        station.totalTraffic = station.arrivals + station.departures;
+        return station;
+    });
+}
+
 // Log map load event
 map.on('load', async () => {
   console.log('Map loaded, adding layers now...');
@@ -104,27 +132,16 @@ map.on('load', async () => {
 
         const trips = await d3.csv(tripsUrl);
         console.log('Loaded Trips Data:', trips);
-        console.log("Example trip:", trips[0]);
 
-        const departures = d3.rollup(trips, v => v.length, d => d.start_station_id);
-        const arrivals = d3.rollup(trips, v => v.length, d => d.end_station_id);
-        
-        stations.map((station) => {
-            let id = station.short_name?.toUpperCase();;
-            station.arrivals = arrivals.get(id) ?? 0;
-            station.departures = departures.get(id) ?? 0;
-            station.totalTraffic = station.arrivals + station.departures;
-            return station;
-        });
-
+        stations = computeStationTraffic(jsonData.data.stations, trips);
         console.log('Stations with Traffic Data:', stations);
-        
+
         const validStations = stations.filter(d => d.totalTraffic !== undefined && !isNaN(d.totalTraffic));
-        
+
         const radiusScale = d3.scaleSqrt()
             .domain([0, d3.max(validStations, d => d.totalTraffic)])
             .range([5, 20]);
-        
+
         circles
             .attr('r', d => radiusScale(d.totalTraffic))
             .attr('fill', 'steelblue')
@@ -142,14 +159,9 @@ map.on('load', async () => {
 
         updatePositions();
     
-        const timeSlider = document.getElementById('timeSlider');
-        const selectedTime = document.getElementById('selectedTime');
-        const anyTime = document.getElementById('anyTime');
-
-        function formatTime(minutes) {
-            const date = new Date(0, 0, 0, 0, minutes);
-            return date.toLocaleTimeString('en-US', { timeStyle: 'short' });
-        }
+        const timeSlider = document.getElementById('time-slider');
+        const selectedTime = document.getElementById('selected-time');
+        const anyTime = document.getElementById('any-time');
 
         function updateTimeDisplay() {
             timeFilter = Number(timeSlider.value);
@@ -165,7 +177,6 @@ map.on('load', async () => {
 
         timeSlider.addEventListener('input', updateTimeDisplay);
         updateTimeDisplay();
-
     } catch (error) {
         console.error('Error loading trips CSV:', error);
     }
