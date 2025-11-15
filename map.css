@@ -61,3 +61,14 @@ header label {
 #map svg circle {
   pointer-events: all !important;
 }
+
+.circle {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+  fill: var(--color);
+}

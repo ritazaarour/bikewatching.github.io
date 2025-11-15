@@ -133,7 +133,10 @@ map.on('load', async () => {
     .attr('fill', 'steelblue')
     .attr('stroke', 'white')
     .attr('stroke-width', 1)
-    .attr('opacity', 0.8);
+    .attr('opacity', 0.8)
+    .style('--departure-ratio', (d) =>
+      stationFlow(d.departures / d.totalTraffic)
+    );
 
     function updatePositions() {
         circles
@@ -202,9 +205,9 @@ map.on('load', async () => {
         
         function updateScatterPlot(timeFilter) {
           const filteredTrips = filterTripsByTime(trips, timeFilter);
-
-          // Recompute station traffic based on the filtered trips
           const filteredStations = computeStationTraffic(stations, filteredTrips);
+
+          let stationFlow = d3.scaleQuantize().domain([0, 1]).range([0, 0.5, 1]);
 
           timeFilter === -1 ? radiusScale.range([0, 25]) : radiusScale.range([3, 50]);
 
@@ -212,7 +215,10 @@ map.on('load', async () => {
           circles
           .data(filteredStations, (d) => d.short_name.toUpperCase())
           .join('circle') // Ensure the data is bound correctly
-          .attr('r', (d) => radiusScale(d.totalTraffic)); // Update circle sizes
+          .attr('r', (d) => radiusScale(d.totalTraffic))
+          .style('--departure-ratio', (d) =>
+            stationFlow(d.departures / d.totalTraffic)
+          );
         }
 
         timeSlider.addEventListener('input', updateTimeDisplay);
