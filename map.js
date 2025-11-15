@@ -168,8 +168,6 @@ map.on('load', async () => {
       
       circles
       .attr('r', d => radiusScale(d.totalTraffic))
-      .attr('fill', 'steelblue')
-      .attr('fill-opacity', 0.6)
       .attr('stroke', 'white')
       .attr('pointer-events', 'auto')
       .each(function (d) {

@@ -62,7 +62,7 @@ header label {
   pointer-events: all !important;
 }
 
-.circle {
+circle {
   --color-departures: steelblue;
   --color-arrivals: darkorange;
   --color: color-mix(
