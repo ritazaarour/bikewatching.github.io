@@ -147,61 +147,61 @@ map.on('load', async () => {
     map.on('moveend', updatePositions);
 
     try {
-        let trips = await d3.csv(
-          'https://dsc106.com/labs/lab07/data/bluebikes-traffic-2024-03.csv',
-          (trip) => {
-              trip.started_at = new Date(trip.started_at);
-              trip.ended_at = new Date(trip.ended_at);
-              return trip;
-          }
+      let trips = await d3.csv(
+        'https://dsc106.com/labs/lab07/data/bluebikes-traffic-2024-03.csv',
+        (trip) => {
+          trip.started_at = new Date(trip.started_at);
+          trip.ended_at = new Date(trip.ended_at);
+          return trip;
+        }
+      );
+      
+      stations = computeStationTraffic(jsonData.data.stations, trips);
+      console.log('Stations with Traffic Data:', stations);
+      
+      const validStations = stations.filter(d => d.totalTraffic !== undefined && !isNaN(d.totalTraffic));
+
+      const radiusScale = d3.scaleSqrt()
+      .domain([0, d3.max(validStations, d => d.totalTraffic)])
+      .range([5, 20]);
+      
+      circles
+      .attr('r', d => radiusScale(d.totalTraffic))
+      .attr('fill', 'steelblue')
+      .attr('fill-opacity', 0.6)
+      .attr('stroke', 'white')
+      .attr('pointer-events', 'auto')
+      .each(function (d) {
+        d3.select(this)
+        .append('title')
+        .text(
+          `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`
         );
-
-        stations = computeStationTraffic(jsonData.data.stations, trips);
-        console.log('Stations with Traffic Data:', stations);
-
-        const validStations = stations.filter(d => d.totalTraffic !== undefined && !isNaN(d.totalTraffic));
-
-        const radiusScale = d3.scaleSqrt()
-            .domain([0, d3.max(validStations, d => d.totalTraffic)])
-            .range([5, 20]);
-
-        circles
-            .attr('r', d => radiusScale(d.totalTraffic))
-            .attr('fill', 'steelblue')
-            .attr('fill-opacity', 0.6)
-            .attr('stroke', 'white')
-            .attr('pointer-events', 'auto')
-            .each(function (d) {
-                // Add <title> for browser tooltips
-                d3.select(this)
-                    .append('title')
-                    .text(
-                        `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`
-                    );
-            });
-
-        updatePositions();
+      });
+      
+      updatePositions();
     
-        const timeSlider = document.getElementById('time-slider');
-        const selectedTime = document.getElementById('selected-time');
-        const anyTime = document.getElementById('any-time');
-
-        function updateTimeDisplay() {
-          let timeFilter = Number(timeSlider.value); // Get slider value
-
-          if (timeFilter === -1) {
-            selectedTime.textContent = ''; // Clear time display
-            anyTimeLabel.style.display = 'block'; // Show "(any time)"
-          } else {
-            selectedTime.textContent = formatTime(timeFilter); // Display formatted time
-            anyTimeLabel.style.display = 'none'; // Hide "(any time)"
+      const timeSlider = document.getElementById('time-slider');
+      const selectedTime = document.getElementById('selected-time');
+      const anyTimeLabel = document.getElementById('any-time');
+      
+      
+      function updateTimeDisplay() {
+        let timeFilter = Number(timeSlider.value);
+        
+        if (timeFilter === -1) {
+          selectedTime.textContent = ''; // Clear time display
+          anyTimeLabel.style.display = 'block';
+        } else {
+          selectedTime.textContent = formatTime(timeFilter); // Display formatted time
+          anyTimeLabel.style.display = 'none'; // Hide "(any time)"
           }
           
           updateScatterPlot(timeFilter);
         }
-
+        
         function updateScatterPlot(timeFilter) {
-           const filteredTrips = filterTripsByTime(trips, timeFilter);
+          const filteredTrips = filterTripsByTime(trips, timeFilter);
 
           // Recompute station traffic based on the filtered trips
           const filteredStations = computeStationTraffic(stations, filteredTrips);
