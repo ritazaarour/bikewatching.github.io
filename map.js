@@ -14,7 +14,8 @@ const map = new mapboxgl.Map({
   zoom: 12, // Initial zoom level
   minZoom: 5, // Minimum allowed zoom
   maxZoom: 18, // Maximum allowed zoom
-});
+}
+);
 
 function getCoords(station) {
   const point = new mapboxgl.LngLat(+station.lon, +station.lat); // Convert lon/lat to Mapbox LngLat
@@ -133,10 +134,7 @@ map.on('load', async () => {
     .attr('fill', 'steelblue')
     .attr('stroke', 'white')
     .attr('stroke-width', 1)
-    .attr('opacity', 0.8)
-    .style('--departure-ratio', (d) =>
-      stationFlow(d.departures / d.totalTraffic)
-    );
+    .attr('opacity', 0.8);
 
     function updatePositions() {
         circles
