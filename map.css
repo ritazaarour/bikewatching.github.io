@@ -72,3 +72,28 @@ circle {
   );
   fill: var(--color);
 }
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 3rem;                 /* big spacing between items (like screenshot) */
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+.legend > div {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  padding-left: 1.4rem;
+  color: #333;
+}
+
+/* Swatch using ::before */
+.legend > div::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: block;
